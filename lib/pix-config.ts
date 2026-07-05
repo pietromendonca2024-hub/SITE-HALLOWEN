@@ -26,7 +26,7 @@
 // ============================================================================
 
 export const PIX_CONFIG = {
-  chave: "150.947.457-94", // CPF, celular, e-mail ou chave aleatória
+  chave: "1743292a-b3f1-4105-bd69-170841e9a2c0", // CPF, celular, e-mail ou chave aleatória
   nomeRecebedor: "Pietro Mendonça Rodrigues", // nome cadastrado na chave PIX (máx. 25 caracteres)
   cidade: "Rio de Janeiro", // cidade do titular da conta (máx. 15 caracteres)
 }
