@@ -1,8 +1,9 @@
 "use client"
 
 import { useCallback, useSyncExternalStore } from "react"
-import type { CategoriaId, Ingresso } from "./types"
+import type { CategoriaId, Genero, Ingresso } from "./types"
 import { pickVillain } from "./villains"
+import { detectarGenero } from "./gender"
 
 const STORAGE_KEY = "noite-das-sombras:ingressos"
 const EVENT = "noite-das-sombras:update"
@@ -60,19 +61,22 @@ function genCode(): string {
 export function useIngressos() {
   const ingressos = useSyncExternalStore(subscribe, getSnapshot, () => EMPTY)
 
-  const criar = useCallback((nome: string, categoria: CategoriaId): Ingresso => {
+  const criar = useCallback((nome: string, categoria: CategoriaId, generoOverride?: Genero): Ingresso => {
     const atual = read()
-    const usados = atual.map((i) => i.vilao)
+    const genero = generoOverride ?? detectarGenero(nome)
+    const usados = atual.filter((i) => i.genero === genero).map((i) => i.vilao)
     const novo: Ingresso = {
       id: crypto.randomUUID(),
       code: genCode(),
       nome: nome.trim(),
+      genero,
       categoria,
-      vilao: pickVillain(usados),
+      vilao: pickVillain(genero, usados),
       criadoEm: new Date().toISOString(),
       status: "fora",
       entradaEm: null,
       saidaEm: null,
+      pago: true,
     }
     write([...atual, novo])
     return novo

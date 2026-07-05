@@ -30,14 +30,18 @@ export const CATEGORIAS: Record<CategoriaId, Categoria> = {
 
 export type StatusIngresso = "fora" | "dentro"
 
+export type Genero = "masculino" | "feminino"
+
 export interface Ingresso {
   id: string
   code: string
   nome: string
+  genero: Genero
   categoria: CategoriaId
   vilao: string
   criadoEm: string
   status: StatusIngresso
   entradaEm: string | null
   saidaEm: string | null
+  pago: boolean
 }
