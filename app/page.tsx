@@ -4,16 +4,16 @@ import type React from "react"
 import { useState } from "react"
 import { Atmosphere } from "@/components/atmosphere"
 import { BuyView } from "@/components/buy-view"
-import { PortariaView } from "@/components/portaria-view"
-import { PainelView } from "@/components/painel-view"
-import { Skull, Ticket, DoorClosed, BarChart3 } from "lucide-react"
+import { Skull, Ticket } from "lucide-react"
 
-type View = "comprar" | "portaria" | "painel"
+// Portaria e Painel saíram do menu público de propósito: agora são rotas à
+// parte (/portaria e /painel), protegidas por senha, e não aparecem em
+// nenhum link visível pros convidados. Só quem recebe o endereço direto (e
+// sabe a senha em lib/access-config.ts) consegue chegar lá.
+type View = "comprar"
 
 const TABS: { id: View; label: string; icon: React.ReactNode }[] = [
   { id: "comprar", label: "Ingressos", icon: <Ticket className="size-4" /> },
-  { id: "portaria", label: "Portaria", icon: <DoorClosed className="size-4" /> },
-  { id: "painel", label: "Painel", icon: <BarChart3 className="size-4" /> },
 ]
 
 export default function Page() {
@@ -55,11 +55,7 @@ export default function Page() {
       </header>
 
       {/* Conteúdo */}
-      <div className="mx-auto max-w-5xl px-4 py-10 sm:py-16">
-        {view === "comprar" && <BuyView />}
-        {view === "portaria" && <PortariaView />}
-        {view === "painel" && <PainelView />}
-      </div>
+      <div className="mx-auto max-w-5xl px-4 py-10 sm:py-16">{view === "comprar" && <BuyView />}</div>
 
       <footer className="border-t border-border/60 py-6 text-center text-xs text-muted-foreground">
         Noite das Sombras · {new Date().getFullYear()} · 100 vilões à espreita
