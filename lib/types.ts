@@ -11,19 +11,19 @@ export const CATEGORIAS: Record<CategoriaId, Categoria> = {
   pista: {
     id: "pista",
     label: "Pista",
-    price: 40,
+    price: 20,
     descricao: "Acesso à pista de dança e às áreas comuns do casarão.",
   },
   vip: {
     id: "vip",
     label: "VIP",
-    price: 80,
+    price: 35,
     descricao: "Área elevada, mesa reservada e entrada preferencial na cripta.",
   },
   pista_openbar: {
     id: "pista_openbar",
     label: "Pista + Open Bar",
-    price: 100,
+    price: 50,
     descricao: "Tudo da pista mais bebidas liberadas a noite inteira. O pacto completo.",
   },
 }
