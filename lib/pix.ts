@@ -47,6 +47,12 @@ export function gerarPixCopiaECola({ chave, nomeRecebedor, cidade, valor, identi
   const merchantAccount = tlv("26", gui + chaveField)
 
   const pfi = tlv("00", "01")
+  // Point of Initiation Method: opcional pela especificação do BCB, mas vários
+  // apps de banco (Nubank, Itaú, etc.) recusam o QR como "inválido" se esse
+  // campo não estiver presente. "11" = QR estático (mesmo código pode ser pago
+  // várias vezes). Sem isso, o payload é válido "no papel" mas muitos scanners
+  // de banco não aceitam.
+  const pontoIniciacao = tlv("01", "11")
   const mcc = tlv("52", "0000")
   const currency = tlv("53", "986")
   const amount = tlv("54", valor.toFixed(2))
@@ -56,7 +62,8 @@ export function gerarPixCopiaECola({ chave, nomeRecebedor, cidade, valor, identi
   const txid = tlv("05", limparTexto(identificador ?? "***", 25) || "***")
   const additionalData = tlv("62", txid)
 
-  const semCrc = pfi + merchantAccount + mcc + currency + amount + country + merchantName + merchantCity + additionalData + "6304"
+  const semCrc =
+    pfi + pontoIniciacao + merchantAccount + mcc + currency + amount + country + merchantName + merchantCity + additionalData + "6304"
 
   return semCrc + crc16(semCrc)
 }
